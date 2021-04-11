@@ -7,6 +7,7 @@ import com.wjh.util.ResponseUtil;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class JdkHttpGet implements HttpGet {
      * 标准get请求无request body，不是所有的服务器可以接收get请求的request body
      */
     @Override
-    public HttpRes get(String urlString, Map<String, String> headerMap, Map<String, String> textParamMap) throws Exception {
+    public HttpRes get(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception {
         // 参数
         if (textParamMap != null && !textParamMap.isEmpty()) {
             String textParam = MapUtil.mapToQueryString(textParamMap, true);
@@ -43,13 +44,15 @@ public class JdkHttpGet implements HttpGet {
         // host:127.0.01:8080
         // accept:text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
         // connection:keep - alive
-        headerMap.put("content-type", "text/*");
-        if (headerMap != null) {
-            Set<Map.Entry<String, String>> entrySet = headerMap.entrySet();
-            for (Map.Entry<String, String> entry : entrySet) {
-                httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
-            }
+        if (headMap == null) {
+            headMap = new HashMap();
         }
+        headMap.put("content-type", "text/*");
+        Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
+        for (Map.Entry<String, String> entry : entrySet) {
+            httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
+        }
+
 
         return ResponseUtil.packJdkHttpRes(httpURLConnection);
     }

@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,6 +33,9 @@ public class JdkHttpPost implements HttpPost {
         // host:127.0.01:8080
         // accept:text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
         // connection:keep - alive
+        if (headMap == null) {
+            headMap = new HashMap();
+        }
         headMap.put("content-type", "multipart/form-data;boundary=" + BOUNDARY);
         if (headMap != null) {
             Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
@@ -101,6 +105,9 @@ public class JdkHttpPost implements HttpPost {
         // host:127.0.01:8080
         // accept:text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
         // connection:keep - alive
+        if (headMap == null) {
+            headMap = new HashMap();
+        }
         switch (rowType) {
             case JSON:
                 headMap.put("content-type", "application/json");
@@ -140,6 +147,9 @@ public class JdkHttpPost implements HttpPost {
         // host:127.0.01:8080
         // accept:text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
         // connection:keep - alive
+        if (headMap == null) {
+            headMap = new HashMap();
+        }
         headMap.put("content-type", "application/x-www-form-urlencoded");
         if (headMap != null) {
             Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
