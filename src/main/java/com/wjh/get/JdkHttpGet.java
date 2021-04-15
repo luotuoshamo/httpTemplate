@@ -53,7 +53,6 @@ public class JdkHttpGet implements HttpGet {
             httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
         }
 
-
         return ResponseUtil.packJdkHttpRes(httpURLConnection);
     }
 }

@@ -21,11 +21,27 @@ public class HttpTemplateTest {
         // 参数
         Map<String, String> textParamMap = new HashMap();
         textParamMap.put("p1", "v1");
-                textParamMap.put("p2", "v2中文");
+        textParamMap.put("p2", "v2中文");
 
         HttpRes httpRes = httpTemplate.get(
                 "http://localhost:8080/mockApi/get",
                 headMap,
+                textParamMap
+        );
+        System.out.println(httpRes);
+    }
+
+    @Test
+    public void getTaobaoMobileApi() throws Exception {
+        HttpTemplate httpTemplate = new HttpTemplate();
+
+        // 参数
+        Map<String, String> textParamMap = new HashMap();
+        textParamMap.put("tel", "13585766229");
+
+        HttpRes httpRes = httpTemplate.get(
+                "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm",
+                null,
                 textParamMap
         );
         System.out.println(httpRes);
@@ -95,6 +111,7 @@ public class HttpTemplateTest {
                 jsonParam);
         System.out.println(httpRes);
     }
+
 
     @Test
     public void postXml() throws Exception {

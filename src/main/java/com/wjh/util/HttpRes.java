@@ -1,9 +1,12 @@
 package com.wjh.util;
 
+import java.util.Map;
+
 public class HttpRes {
     private String responseCode;
     private String responseMessage;
     private String data;
+    private Map<String,String> responseHeadMap;
 
     public HttpRes() {
     }
@@ -38,12 +41,21 @@ public class HttpRes {
         this.data = data;
     }
 
+    public Map<String, String> getResponseHeadMap() {
+        return responseHeadMap;
+    }
+
+    public void setResponseHeadMap(Map<String, String> responseHeadMap) {
+        this.responseHeadMap = responseHeadMap;
+    }
+
     @Override
     public String toString() {
         return "HttpRes{" +
                 "responseCode='" + responseCode + '\'' +
                 ", responseMessage='" + responseMessage + '\'' +
                 ", data='" + data + '\'' +
+                ", responseHeadMap=" + responseHeadMap +
                 '}';
     }
 }

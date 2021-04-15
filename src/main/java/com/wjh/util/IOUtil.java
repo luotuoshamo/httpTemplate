@@ -4,17 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 public class IOUtil {
     private IOUtil() {
     }
 
-    public static String inputStreamToString(InputStream is) throws IOException {
+    public static String inputStreamToString(InputStream is, String charset) throws IOException {
         byte[] bytes = new byte[is.available()];
         is.read(bytes);
         is.close();
-        return new String(bytes, StandardCharsets.UTF_8);
+        return new String(bytes, charset);
     }
 
     public static byte[] fileToBytes(File file) throws Exception {
