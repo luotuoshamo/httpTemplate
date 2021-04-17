@@ -55,7 +55,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!--打包时不执行单元测试-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
