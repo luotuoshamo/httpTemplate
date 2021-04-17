@@ -37,6 +37,9 @@ public class ResponseUtil {
         // 响应体
         InputStream is = httpURLConnection.getInputStream();
         String responseCharset = ResponseUtil.getCharsetFromMap(responseHeadMap);
+        if (responseCharset == null || responseCharset.trim().isEmpty()) {
+            responseCharset = Constant.CHARSET_UTF8;
+        }
         httpRes.setData(IOUtil.inputStreamToString(is, responseCharset));
         return httpRes;
     }
