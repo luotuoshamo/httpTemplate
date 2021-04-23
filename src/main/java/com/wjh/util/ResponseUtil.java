@@ -20,10 +20,6 @@ public class ResponseUtil {
         int responseCode = httpURLConnection.getResponseCode();
         httpRes.setResponseCode(responseCode + "");
 
-        // 响应码对应的解释
-        String responseMessage = httpURLConnection.getResponseMessage();
-        httpRes.setResponseMessage(responseMessage);
-
         // 响应头
         HashMap responseHeadMap = new HashMap();
         Map<String, List<String>> headerFields = httpURLConnection.getHeaderFields();
@@ -34,13 +30,16 @@ public class ResponseUtil {
             httpRes.setResponseHeadMap(responseHeadMap);
         }
 
-        // 响应体
+        // 响应体（无论是文本还是二进制，在HttpRes以文本和二进制各保存一次）
         InputStream is = httpURLConnection.getInputStream();
         String responseCharset = ResponseUtil.getCharsetFromMap(responseHeadMap);
         if (responseCharset == null || responseCharset.trim().isEmpty()) {
             responseCharset = Constant.CHARSET_UTF8;
         }
-        httpRes.setData(IOUtil.inputStreamToString(is, responseCharset));
+        byte[] bytes = IOUtil.inputStreamToBytes(is);
+        httpRes.setBinaryResponseBody(bytes);
+        httpRes.setTextResponseBody(new String(bytes, responseCharset));
+
         return httpRes;
     }
 

@@ -1,8 +1,7 @@
 # 概述
 
-* 该框架用于发送HTTP请求，目前支持发送GET、POST请求，其中POST请求支持form data、x-www-form-urlencoded、json、xml
+* 该框架用于发送HTTP请求，目前支持发送GET、POST请求，其中POST请求支持form textResponseBody、x-www-form-urlencoded、json、xml
 * 该框架目前只依赖于JDK8 ，不久后会加入Apache HttpClient的实现
-* 该框架支持的字符集为UTF-8
 
 # 发GET请求
 
@@ -32,7 +31,7 @@ public void get() throws Exception {
 
 #  发POST请求
 
-## form data
+## form textResponseBody
 
 ```java
 @Test

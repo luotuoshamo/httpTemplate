@@ -4,6 +4,7 @@ import com.wjh.util.HttpRes;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,5 +136,18 @@ public class HttpTemplateTest {
                 headMap,
                 xmlSb.toString());
         System.out.println(httpRes);
+    }
+
+    @Test
+    public void testGetFile() throws Exception {
+        HttpTemplate httpTemplate = new HttpTemplate();
+        String urlString = "https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/topnav/yinyue@2x-c18adacacb.png";
+        HttpRes httpRes = httpTemplate.get(urlString,
+                null, null);
+        System.out.println(httpRes);
+        byte[] binaryResponseBody = httpRes.getBinaryResponseBody();
+        FileOutputStream fos = new FileOutputStream("d:/tmp/1.png");
+        fos.write(binaryResponseBody);
+        fos.close();
     }
 }

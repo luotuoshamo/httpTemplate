@@ -16,6 +16,13 @@ public class IOUtil {
         return new String(bytes, charset);
     }
 
+    public static byte[] inputStreamToBytes(InputStream is) throws IOException {
+        byte[] bytes = new byte[is.available()];
+        is.read(bytes);
+        is.close();
+        return bytes;
+    }
+
     public static byte[] fileToBytes(File file) throws Exception {
         FileInputStream fis = new FileInputStream(file);
         byte[] bytes = new byte[fis.available()];
