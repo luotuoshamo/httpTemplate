@@ -11,6 +11,8 @@ public class HttpRes {
     private String textResponseBody;
     // 响应体-二进制
     private byte[] binaryResponseBody;
+    // 错误信息
+    private String textErrorResponseBody;
 
     public HttpRes() {
     }
@@ -47,19 +49,30 @@ public class HttpRes {
         this.binaryResponseBody = binaryResponseBody;
     }
 
+    public String getTextErrorResponseBody() {
+        return textErrorResponseBody;
+    }
+
+    public void setTextErrorResponseBody(String textErrorResponseBody) {
+        this.textErrorResponseBody = textErrorResponseBody;
+    }
+
     @Override
     public String toString() {
         String s = "";
-        for (int i = 0; i < Math.min(10, binaryResponseBody.length); i++) {
-            s += ((int) binaryResponseBody[i] + ",");
+        if (binaryResponseBody != null) {
+            for (int i = 0; i < Math.min(10, binaryResponseBody.length); i++) {
+                s += ((int) binaryResponseBody[i] + ",");
+            }
+            s += "...total byte array length is " + binaryResponseBody.length;
         }
-        s += "...total byte array length is " + binaryResponseBody.length;
 
         return "HttpRes{" +
                 "responseCode='" + responseCode + '\'' +
                 ", responseHeadMap=" + responseHeadMap +
                 ", textResponseBody='" + textResponseBody + '\'' +
                 ", binaryResponseBody=" + s +
+                ", textErrorResponseBody='" + textErrorResponseBody + '\'' +
                 '}';
     }
 }

@@ -63,13 +63,13 @@ public class HttpTemplateTest {
         textParamMap.put("p2", "v2中文");
 
         // 文件参数
-        Map<String, File> fileParamMap = new HashMap();
-        fileParamMap.put("myFile", new File("d:/tmp/1.jpg"));
-        fileParamMap.put("myFile2", new File("d:/tmp/2.jpg"));
-        fileParamMap.put("myFile3", new File("d:/tmp/2.jpg"));
+        Map<String, File> binaryParamMap = new HashMap();
+        binaryParamMap.put("myFile", new File("d:/tmp/1.jpg"));
+        binaryParamMap.put("myFile2", new File("d:/tmp/2.jpg"));
+        binaryParamMap.put("myFile3", new File("d:/tmp/2.jpg"));
 
         HttpRes httpRes = httpTemplate.postFormData("http://localhost:8080/mockApi/postFormData",
-                headMap, textParamMap, fileParamMap);
+                headMap, textParamMap, binaryParamMap);
         System.out.println(httpRes);
     }
 
@@ -128,7 +128,7 @@ public class HttpTemplateTest {
         xmlSb.append("<xml charSet='UTF-8'>");
         xmlSb.append("<root>");
         xmlSb.append("<name>wjh</name>");
-        xmlSb.append("<age>wjh中文</age>");
+        xmlSb.append("<age>10</age>");
         xmlSb.append("</root>");
 
         HttpRes httpRes = httpTemplate.postXml(

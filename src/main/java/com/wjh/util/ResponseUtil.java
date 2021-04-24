@@ -31,11 +31,19 @@ public class ResponseUtil {
         }
 
         // 响应体（无论是文本还是二进制，在HttpRes以文本和二进制各保存一次）
-        InputStream is = httpURLConnection.getInputStream();
         String responseCharset = ResponseUtil.getCharsetFromMap(responseHeadMap);
         if (responseCharset == null || responseCharset.trim().isEmpty()) {
             responseCharset = Constant.CHARSET_UTF8;
         }
+        // 错误信息
+        InputStream errIs = httpURLConnection.getErrorStream();
+        if (errIs != null) {
+            String errMsg = IOUtil.inputStreamToString(errIs, responseCharset);
+            httpRes.setTextErrorResponseBody(errMsg);
+            return httpRes;
+        }
+        // 正常数据
+        InputStream is = httpURLConnection.getInputStream();
         byte[] bytes = IOUtil.inputStreamToBytes(is);
         httpRes.setBinaryResponseBody(bytes);
         httpRes.setTextResponseBody(new String(bytes, responseCharset));

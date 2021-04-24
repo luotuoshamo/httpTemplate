@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 @RestController
 @RequestMapping("/mockApi")
 public class MockApiController {
-    @GetMapping(value = "/get",consumes = "text/*")
+    @GetMapping(value = "/get",produces = "application/json")
     public String get(HttpServletRequest request) {
         PrintUtil.printHeaders(request);
         PrintUtil.printParams(request);
@@ -81,7 +81,7 @@ public class MockApiController {
         while ((line = br.readLine()) != null) {
             sb.append(line);
         }
-        String xmlParam = sb.toString();// {k1:v1,k2:v2}
+        String xmlParam = sb.toString();
 
         return "{postXml:postXmlRes}, xmlParam=" + xmlParam;
     }

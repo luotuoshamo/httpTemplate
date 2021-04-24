@@ -16,7 +16,7 @@ public class JdkHttpPost implements HttpPost {
     @Override
     public HttpRes postFormData(String urlString, Map<String, String> headMap,
                                 Map<String, String> textParamMap,
-                                Map<String, File> fileParamMap) throws Exception {
+                                Map<String, File> binaryParamMap) throws Exception {
         final String BOUNDARY = new Date().getTime() + "wjhHttpTemplate";
         URL url = new URL(urlString);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -64,8 +64,8 @@ public class JdkHttpPost implements HttpPost {
         }
 
         // 文件参数
-        if (fileParamMap != null) {
-            Set<Map.Entry<String, File>> entrySet = fileParamMap.entrySet();
+        if (binaryParamMap != null) {
+            Set<Map.Entry<String, File>> entrySet = binaryParamMap.entrySet();
             for (Map.Entry<String, File> entry : entrySet) {
                 String k = entry.getKey();
                 File v = entry.getValue();

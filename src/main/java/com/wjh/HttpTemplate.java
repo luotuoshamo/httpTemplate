@@ -15,7 +15,7 @@ import java.util.Map;
  * 入口
  */
 public class HttpTemplate {
-    private ImplWayEnum implWay;
+    private ImplWayEnum implWay; // 底层实现
     private HttpGet httpGet;
     private HttpPost httpPost;
 
@@ -31,6 +31,7 @@ public class HttpTemplate {
             this.httpPost = new JdkHttpPost();
         }//else if...
     }
+
 
     public HttpRes get(String urlString, Map<String, String> headerMap, Map<String, String> textParamMap) throws Exception {
         return httpGet.get(urlString, headerMap, textParamMap);

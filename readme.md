@@ -1,9 +1,11 @@
 # 概述
 
-* 该框架用于发送HTTP请求，目前支持发送GET、POST请求，其中POST请求支持form textResponseBody、x-www-form-urlencoded、json、xml
+* 该框架用于发送HTTP请求，目前支持发送GET、POST请求，其中POST请求支持form-data、x-www-form-urlencoded、json、xml
 * 该框架目前只依赖于JDK8 ，不久后会加入Apache HttpClient的实现
 
 # 发GET请求
+
+get请求无请求体，参数放在地址中
 
 ```java
 @Test
@@ -50,16 +52,16 @@ public void postFormData() throws Exception {
 	textParamMap.put("p2", "v2");
 
 	// 文件参数
-	Map<String, File> fileParamMap = new HashMap();
-	fileParamMap.put("myFile", new File("d:/tmp/1.jpg"));
-	fileParamMap.put("myFile2", new File("d:/tmp/2.jpg"));
-	fileParamMap.put("myFile3", new File("d:/tmp/2.jpg"));
+	Map<String, File> binaryParamMap = new HashMap();
+	binaryParamMap.put("myFile", new File("d:/tmp/1.jpg"));
+	binaryParamMap.put("myFile2", new File("d:/tmp/2.jpg"));
+	binaryParamMap.put("myFile3", new File("d:/tmp/2.jpg"));
 
 	HttpRes httpRes = httpTemplate.postFormData(
         "http://localhost:8080/mockApi/postFormData",
 		headMap, 
          textParamMap, 
-         fileParamMap
+         binaryParamMap
      );
 	System.out.println(httpRes);
 }

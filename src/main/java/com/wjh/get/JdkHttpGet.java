@@ -7,7 +7,6 @@ import com.wjh.util.ResponseUtil;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,13 +43,11 @@ public class JdkHttpGet implements HttpGet {
         // host:127.0.01:8080
         // accept:text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
         // connection:keep - alive
-        if (headMap == null) {
-            headMap = new HashMap();
-        }
-        headMap.put("content-type", "text/*");
-        Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
-        for (Map.Entry<String, String> entry : entrySet) {
-            httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
+        if (headMap != null) {
+            Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
+            for (Map.Entry<String, String> entry : entrySet) {
+                httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
+            }
         }
 
         return ResponseUtil.packJdkHttpRes(httpURLConnection);
