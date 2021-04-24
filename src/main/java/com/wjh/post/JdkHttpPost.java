@@ -88,51 +88,8 @@ public class JdkHttpPost implements HttpPost {
     }
 
     @Override
-    public HttpRes postRow(RowType rowType, String urlString, Map<String, String> headMap,
-                           String jsonParam) throws Exception {
-        URL url = new URL(urlString);
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("POST");
-        httpURLConnection.setDoOutput(true);
-
-        // 请求超时时间
-        httpURLConnection.setConnectTimeout(6_000_000);// 6 minutes
-        httpURLConnection.setReadTimeout(6_000_000);
-
-        // 请求头
-        // jdk发请求莫默认携带的请求头：
-        // user-agent:Java/1.8.0_211
-        // host:127.0.01:8080
-        // accept:text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-        // connection:keep - alive
-        if (headMap == null) {
-            headMap = new HashMap();
-        }
-        switch (rowType) {
-            case JSON:
-                headMap.put("content-type", "application/json");
-                break;
-            case XML:
-                headMap.put("content-type", "application/xml");
-                break;
-        }
-        if (headMap != null) {
-            Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
-            for (Map.Entry<String, String> entry : entrySet) {
-                httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
-            }
-        }
-
-        // row参数
-        OutputStream os = httpURLConnection.getOutputStream();
-        os.write(jsonParam.getBytes(StandardCharsets.UTF_8));
-
-        return ResponseUtil.packJdkHttpRes(httpURLConnection);
-    }
-
-    @Override
-    public HttpRes postUrlencoded(String urlString, Map<String, String> headMap,
-                                  Map<String, String> textParamMap) throws Exception {
+    public HttpRes postFormUrlEncoded(String urlString, Map<String, String> headMap,
+                                      Map<String, String> textParamMap) throws Exception {
         URL url = new URL(urlString);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("POST");
@@ -173,4 +130,49 @@ public class JdkHttpPost implements HttpPost {
 
         return ResponseUtil.packJdkHttpRes(httpURLConnection);
     }
+
+
+    @Override
+    public HttpRes postRow(RowType rowType, String urlString, Map<String, String> headMap,
+                           String textParamString) throws Exception {
+        URL url = new URL(urlString);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("POST");
+        httpURLConnection.setDoOutput(true);
+
+        // 请求超时时间
+        httpURLConnection.setConnectTimeout(6_000_000);// 6 minutes
+        httpURLConnection.setReadTimeout(6_000_000);
+
+        // 请求头
+        // jdk发请求莫默认携带的请求头：
+        // user-agent:Java/1.8.0_211
+        // host:127.0.01:8080
+        // accept:text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+        // connection:keep - alive
+        if (headMap == null) {
+            headMap = new HashMap();
+        }
+        switch (rowType) {
+            case JSON:
+                headMap.put("content-type", "application/json");
+                break;
+            case XML:
+                headMap.put("content-type", "application/xml");
+                break;
+        }
+        if (headMap != null) {
+            Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
+            for (Map.Entry<String, String> entry : entrySet) {
+                httpURLConnection.setRequestProperty(entry.getKey(), entry.getValue());
+            }
+        }
+
+        // row参数
+        OutputStream os = httpURLConnection.getOutputStream();
+        os.write(textParamString.getBytes(StandardCharsets.UTF_8));
+
+        return ResponseUtil.packJdkHttpRes(httpURLConnection);
+    }
+
 }

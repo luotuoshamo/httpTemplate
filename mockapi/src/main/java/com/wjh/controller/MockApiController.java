@@ -25,7 +25,7 @@ public class MockApiController {
         return "{res:getRes}";
     }
 
-    @PostMapping(value = "/postFormData", consumes = "multipart/form-data")
+    @PostMapping(value = "/postFormData")
     public String postFormData(MultipartFile myFile, MultipartFile myFile2, MultipartFile myFile3, HttpServletRequest request) {
         PrintUtil.printHeaders(request);
         PrintUtil.printParams(request);

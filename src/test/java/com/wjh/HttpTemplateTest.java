@@ -1,6 +1,7 @@
 package com.wjh;
 
 import com.wjh.util.HttpRes;
+import com.wjh.util.ImplWayEnum;
 import org.junit.Test;
 
 import java.io.File;
@@ -9,11 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpTemplateTest {
+    private HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
 
     @Test
     public void get() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
-
         // 请求头
         Map<String, String> headMap = new HashMap();
         headMap.put("h1", "v1");
@@ -33,25 +33,7 @@ public class HttpTemplateTest {
     }
 
     @Test
-    public void getTaobaoMobileApi() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
-
-        // 参数
-        Map<String, String> textParamMap = new HashMap();
-        textParamMap.put("tel", "13585766229");
-
-        HttpRes httpRes = httpTemplate.get(
-                "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm",
-                null,
-                textParamMap
-        );
-        System.out.println(httpRes);
-    }
-
-    @Test
     public void postFormData() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
-
         // 请求头
         Map<String, String> headMap = new HashMap();
         headMap.put("h1", "v1");
@@ -75,8 +57,6 @@ public class HttpTemplateTest {
 
     @Test
     public void postUrlencoded() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
-
         // 请求头
         Map<String, String> headMap = new HashMap();
         headMap.put("h1", "v1");
@@ -87,7 +67,7 @@ public class HttpTemplateTest {
         textParamMap.put("p1", "v1");
         textParamMap.put("p2", "v2中文");
 
-        HttpRes httpRes = httpTemplate.postUrlencoded(
+        HttpRes httpRes = httpTemplate.postFormUrlEncoded(
                 "http://localhost:8080/mockApi/postUrlencoded",
                 headMap,
                 textParamMap);
@@ -96,8 +76,6 @@ public class HttpTemplateTest {
 
     @Test
     public void postJson() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
-
         // 请求头
         Map<String, String> headMap = new HashMap();
         headMap.put("h1", "v1");
@@ -116,8 +94,6 @@ public class HttpTemplateTest {
 
     @Test
     public void postXml() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
-
         // 请求头
         Map<String, String> headMap = new HashMap();
         headMap.put("h1", "v1");
@@ -127,7 +103,7 @@ public class HttpTemplateTest {
         StringBuffer xmlSb = new StringBuffer();
         xmlSb.append("<xml charSet='UTF-8'>");
         xmlSb.append("<root>");
-        xmlSb.append("<name>wjh</name>");
+        xmlSb.append("<name>wjh汉字</name>");
         xmlSb.append("<age>10</age>");
         xmlSb.append("</root>");
 
@@ -140,7 +116,6 @@ public class HttpTemplateTest {
 
     @Test
     public void testGetFile() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
         String urlString = "https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/topnav/yinyue@2x-c18adacacb.png";
         HttpRes httpRes = httpTemplate.get(urlString,
                 null, null);
@@ -149,15 +124,5 @@ public class HttpTemplateTest {
         FileOutputStream fos = new FileOutputStream("d:/tmp/1.png");
         fos.write(binaryResponseBody);
         fos.close();
-    }
-
-    @Test
-    public void testJd() throws Exception {
-        HttpTemplate httpTemplate = new HttpTemplate();
-        Map<String, String> textParamMap = new HashMap<>();
-        textParamMap.put("appkey", "138e5f75189845c89ec9b308fe867418");
-        textParamMap.put("city", "南京");
-        HttpRes httpRes = httpTemplate.get("https://way.jd.com/jisuapi/weather", null, textParamMap);
-        System.out.println(httpRes);
     }
 }

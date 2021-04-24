@@ -1,5 +1,5 @@
 package com.wjh.util;
 
 public enum ImplWayEnum {
-    JDK
+    JDK,HTTP_CLIENT
 }

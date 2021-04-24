@@ -11,8 +11,8 @@ public interface HttpPost {
                          Map<String, String> textParamMap,
                          Map<String, File> binaryParamMap) throws Exception;
 
+    HttpRes postFormUrlEncoded(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception;
 
-    HttpRes postRow(RowType rowType, String urlString, Map<String, String> headMap, String jsonParam) throws Exception;
+    HttpRes postRow(RowType rowType, String urlString, Map<String, String> headMap, String textParamString) throws Exception;
 
-    HttpRes postUrlencoded(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception;
 }

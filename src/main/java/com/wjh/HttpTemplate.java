@@ -1,7 +1,9 @@
 package com.wjh;
 
+import com.wjh.get.HttpClientHttpGet;
 import com.wjh.get.HttpGet;
 import com.wjh.get.JdkHttpGet;
+import com.wjh.post.HttpClientHttpPost;
 import com.wjh.post.HttpPost;
 import com.wjh.post.JdkHttpPost;
 import com.wjh.util.HttpRes;
@@ -26,10 +28,19 @@ public class HttpTemplate {
     public HttpTemplate(ImplWayEnum implWay) {
         this.implWay = implWay;
 
-        if (this.implWay == ImplWayEnum.JDK) {
-            this.httpGet = new JdkHttpGet();
-            this.httpPost = new JdkHttpPost();
-        }//else if...
+        switch (this.implWay) {
+            case JDK:
+                this.httpGet = new JdkHttpGet();
+                this.httpPost = new JdkHttpPost();
+                break;
+            case HTTP_CLIENT:
+                this.httpGet = new HttpClientHttpGet();
+                this.httpPost = new HttpClientHttpPost();
+                break;
+            default:
+                this.httpGet = new JdkHttpGet();
+                this.httpPost = new JdkHttpPost();
+        }
     }
 
 
@@ -41,8 +52,8 @@ public class HttpTemplate {
         return httpPost.postFormData(urlString, headerMap, textParamMap, fileParamMap);
     }
 
-    public HttpRes postUrlencoded(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception {
-        return httpPost.postUrlencoded(urlString, headMap, textParamMap);
+    public HttpRes postFormUrlEncoded(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception {
+        return httpPost.postFormUrlEncoded(urlString, headMap, textParamMap);
     }
 
     public HttpRes postJson(String urlString, Map<String, String> headMap, String jsonParam) throws Exception {

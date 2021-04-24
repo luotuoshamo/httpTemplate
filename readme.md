@@ -1,7 +1,21 @@
 # 概述
 
 * 该框架用于发送HTTP请求，目前支持发送GET、POST请求，其中POST请求支持form-data、x-www-form-urlencoded、json、xml
-* 该框架目前只依赖于JDK8 ，不久后会加入Apache HttpClient的实现
+
+* 该框架目前依赖JDK8和Apache HttpClient 4.5.13，但使用时无需加入httpClient的依赖
+
+* 版本1.1.0开始加入Apache HttpClient的实现，可通过构造方法切换实现：
+
+  ```java
+  // jdk
+  HttpTemplate httpTemplate = new HttpTemplate();
+  
+  // jdk
+  HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.JDK);
+  
+  // httpClient
+  HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
+  ```
 
 # 发GET请求
 
@@ -84,7 +98,7 @@ public void postUrlencoded() throws Exception {
 	textParamMap.put("p1", "v1");
 	textParamMap.put("p2", "v2");
 
-	HttpRes httpRes = httpTemplate.postUrlencoded(
+	HttpRes httpRes = httpTemplate.postFormUrlEncoded(
 		"http://localhost:8080/mockApi/postUrlencoded",
 		 headMap,
 		 textParamMap
