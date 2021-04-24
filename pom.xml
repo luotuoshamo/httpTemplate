@@ -7,10 +7,10 @@
     <groupId>com.wjh</groupId>
     <artifactId>httpTemplate</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.1</version>
-    <modules>
-    <module>mockapi</module>
-    </modules>
+    <version>1.0.2</version>
+    <!--<modules>-->
+    <!--<module>mockapi</module>-->
+    <!--</modules>-->
 
     <dependencies>
         <dependency>
