@@ -150,7 +150,11 @@ public class JdkHttpPost implements HttpPost {
         if (headMap == null) {
             headMap = new HashMap();
         }
-        headMap.put("content-type", "application/x-www-form-urlencoded");
+        String charset = MapUtil.getCharsetFromMap(headMap);
+        if (charset == null || charset.trim().isEmpty()) {
+            charset = Constant.CHARSET_UTF8;
+        }
+        headMap.put("content-type", "application/x-www-form-urlencoded;charset=" + charset);
         if (headMap != null) {
             Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
             for (Map.Entry<String, String> entry : entrySet) {

@@ -1,5 +1,6 @@
 package com.wjh.get;
 
+import com.wjh.util.Constant;
 import com.wjh.util.HttpRes;
 import com.wjh.util.MapUtil;
 import com.wjh.util.ResponseUtil;
@@ -17,9 +18,14 @@ public class JdkHttpGet implements HttpGet {
      */
     @Override
     public HttpRes get(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception {
+        String charset = MapUtil.getCharsetFromMap(headMap);
+        if (charset == null || charset.trim().isEmpty()) {
+            charset = Constant.CHARSET_UTF8;
+        }
+
         // 参数
         if (textParamMap != null && !textParamMap.isEmpty()) {
-            String textParam = MapUtil.mapToQueryString(textParamMap, true);
+            String textParam = MapUtil.mapToQueryString(textParamMap, charset, true);
             if (urlString.indexOf("?") != -1) {
                 urlString += ("&" + textParam);
             } else {

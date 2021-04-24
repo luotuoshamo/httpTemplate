@@ -150,4 +150,14 @@ public class HttpTemplateTest {
         fos.write(binaryResponseBody);
         fos.close();
     }
+
+    @Test
+    public void testJd() throws Exception {
+        HttpTemplate httpTemplate = new HttpTemplate();
+        Map<String, String> textParamMap = new HashMap<>();
+        textParamMap.put("appkey", "138e5f75189845c89ec9b308fe867418");
+        textParamMap.put("city", "南京");
+        HttpRes httpRes = httpTemplate.get("https://way.jd.com/jisuapi/weather", null, textParamMap);
+        System.out.println(httpRes);
+    }
 }
