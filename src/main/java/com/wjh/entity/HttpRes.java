@@ -1,4 +1,4 @@
-package com.wjh.util;
+package com.wjh.entity;
 
 import java.util.Map;
 

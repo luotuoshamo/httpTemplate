@@ -1,5 +1,7 @@
-package com.wjh.get;
+package com.wjh.get.impl;
 
+import com.wjh.entity.HttpRes;
+import com.wjh.get.HttpGet;
 import com.wjh.util.*;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -7,17 +9,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import java.util.Map;
 import java.util.Set;
 
-public class HttpClientHttpGet implements HttpGet {
+public class HttpClientHttpGetImpl implements HttpGet {
     @Override
-    public HttpRes get(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception {
+    public HttpRes get(String urlString,
+                       Map<String, String> headMap,
+                       Map<String, String> textParamMap) throws Exception {
         CloseableHttpClient httpClient = RequestUtil.getHttpClient(urlString);
+        String charset = HeadUtil.getCharsetFromHeadMap(headMap, Constant.DEFAULT_CHARSET);
 
-        String charset = MapUtil.getCharsetFromMap(headMap);
-        if (charset == null || charset.trim().isEmpty()) {
-            charset = Constant.CHARSET_UTF8;
-        }
-
-        // 参数(请求体)
+        // 参数
         String queryString = MapUtil.mapToQueryString(textParamMap, charset, true);
         if (urlString.contains("?")) {
             urlString += ("&" + queryString);

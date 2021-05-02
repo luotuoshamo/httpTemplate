@@ -1,6 +1,6 @@
 package com.wjh;
 
-import com.wjh.util.HttpRes;
+import com.wjh.entity.HttpRes;
 import org.junit.Test;
 
 import java.util.HashMap;

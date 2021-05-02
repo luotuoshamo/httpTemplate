@@ -6,19 +6,24 @@ import org.apache.http.impl.client.HttpClients;
 
 import javax.net.ssl.*;
 import java.security.cert.CertificateException;
-import java.util.Map;
 
 public class RequestUtil {
+    /**
+     * 用httpClient发请求时，获取HttpClient
+     */
     public static CloseableHttpClient getHttpClient(boolean unsafeHttps) throws Exception {
         return unsafeHttps ? httpClientForUnsafeHttps() : HttpClients.createDefault();
     }
 
+    /**
+     * 用httpClient发请求时，获取HttpClient
+     */
     public static CloseableHttpClient getHttpClient(String url) throws Exception {
         return getHttpClient(isHttpsUrl(url));
     }
 
     /**
-     * 创建用于请求不安全https的httpClent
+     * 创建用于请求不安全https的httpClient
      */
     public static CloseableHttpClient httpClientForUnsafeHttps() throws Exception {
         SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -56,21 +61,10 @@ public class RequestUtil {
     }
 
     /**
-     * 判断url是否是https协议
+     * 判断url是否是https
      */
     public static boolean isHttpsUrl(String url) {
         if (url == null || url.trim().isEmpty()) return false;
         return url.toLowerCase().startsWith("https");
-    }
-
-    /**
-     * 从请求头/响应头中获取charset
-     */
-    public static String getCharsetFromHeadMap(Map<String, String> headMap) {
-        String charset = MapUtil.getCharsetFromMap(headMap);
-        if (charset == null || charset.trim().isEmpty()) {
-            charset = Constant.CHARSET_UTF8;
-        }
-        return charset;
     }
 }

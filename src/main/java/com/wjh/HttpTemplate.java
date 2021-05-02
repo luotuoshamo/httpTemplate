@@ -1,14 +1,14 @@
 package com.wjh;
 
-import com.wjh.get.HttpClientHttpGet;
+import com.wjh.enm.ImplWayEnum;
+import com.wjh.enm.RowType;
+import com.wjh.entity.HttpRes;
 import com.wjh.get.HttpGet;
-import com.wjh.get.JdkHttpGet;
-import com.wjh.post.HttpClientHttpPost;
+import com.wjh.get.impl.HttpClientHttpGetImpl;
+import com.wjh.get.impl.JdkHttpGetImpl;
 import com.wjh.post.HttpPost;
-import com.wjh.post.JdkHttpPost;
-import com.wjh.util.HttpRes;
-import com.wjh.util.ImplWayEnum;
-import com.wjh.util.RowType;
+import com.wjh.post.impl.HttpClientHttpPostImpl;
+import com.wjh.post.impl.JdkHttpPostImpl;
 
 import java.io.File;
 import java.util.Map;
@@ -30,29 +30,32 @@ public class HttpTemplate {
 
         switch (this.implWay) {
             case JDK:
-                this.httpGet = new JdkHttpGet();
-                this.httpPost = new JdkHttpPost();
+                this.httpGet = new JdkHttpGetImpl();
+                this.httpPost = new JdkHttpPostImpl();
                 break;
             case HTTP_CLIENT:
-                this.httpGet = new HttpClientHttpGet();
-                this.httpPost = new HttpClientHttpPost();
+                this.httpGet = new HttpClientHttpGetImpl();
+                this.httpPost = new HttpClientHttpPostImpl();
                 break;
-            default:
-                this.httpGet = new JdkHttpGet();
-                this.httpPost = new JdkHttpPost();
         }
     }
 
-
-    public HttpRes get(String urlString, Map<String, String> headerMap, Map<String, String> textParamMap) throws Exception {
+    public HttpRes get(String urlString,
+                       Map<String, String> headerMap,
+                       Map<String, String> textParamMap) throws Exception {
         return httpGet.get(urlString, headerMap, textParamMap);
     }
 
-    public HttpRes postFormData(String urlString, Map<String, String> headerMap, Map<String, String> textParamMap, Map<String, File> fileParamMap) throws Exception {
+    public HttpRes postFormData(String urlString,
+                                Map<String, String> headerMap,
+                                Map<String, String> textParamMap,
+                                Map<String, File> fileParamMap) throws Exception {
         return httpPost.postFormData(urlString, headerMap, textParamMap, fileParamMap);
     }
 
-    public HttpRes postFormUrlEncoded(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception {
+    public HttpRes postFormUrlEncoded(String urlString,
+                                      Map<String, String> headMap,
+                                      Map<String, String> textParamMap) throws Exception {
         return httpPost.postFormUrlEncoded(urlString, headMap, textParamMap);
     }
 
@@ -60,9 +63,9 @@ public class HttpTemplate {
         return httpPost.postRow(RowType.JSON, urlString, headMap, jsonParam);
     }
 
-    public HttpRes postXml(String urlString, Map<String, String> headMap, String xmlParam) throws Exception {
+    public HttpRes postXml(String urlString,
+                           Map<String, String> headMap,
+                           String xmlParam) throws Exception {
         return httpPost.postRow(RowType.XML, urlString, headMap, xmlParam);
     }
-
-
 }

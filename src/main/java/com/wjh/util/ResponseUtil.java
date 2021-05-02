@@ -1,5 +1,6 @@
 package com.wjh.util;
 
+import com.wjh.entity.HttpRes;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
@@ -36,10 +37,7 @@ public class ResponseUtil {
         }
 
         // 响应体（无论是文本还是二进制，在HttpRes以文本和二进制各保存一次）
-        String responseCharset = MapUtil.getCharsetFromMap(responseHeadMap);
-        if (responseCharset == null || responseCharset.trim().isEmpty()) {
-            responseCharset = Constant.CHARSET_UTF8;
-        }
+        String responseCharset = HeadUtil.getCharsetFromHeadMap(responseHeadMap, Constant.DEFAULT_CHARSET);
         // 错误信息
         InputStream errIs = httpURLConnection.getErrorStream();
         if (errIs != null) {
@@ -74,12 +72,8 @@ public class ResponseUtil {
         }
         httpRes.setResponseHeadMap(responseHeadMap);
 
-        String charset = MapUtil.getCharsetFromMap(responseHeadMap);
-        if (charset == null || charset.trim().isEmpty()) {
-            charset = Constant.CHARSET_UTF8;
-        }
-
         // 响应体
+        String charset = HeadUtil.getCharsetFromHeadMap(responseHeadMap, Constant.DEFAULT_CHARSET);
         HttpEntity entity = response.getEntity();
         byte[] bytes = EntityUtils.toByteArray(entity);
         httpRes.setBinaryResponseBody(bytes);
@@ -87,5 +81,4 @@ public class ResponseUtil {
 
         return httpRes;
     }
-
 }

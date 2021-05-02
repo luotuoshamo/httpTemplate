@@ -1,9 +1,9 @@
-package com.wjh.post;
+package com.wjh.post.impl;
 
-import com.wjh.util.HttpRes;
-import com.wjh.util.RequestUtil;
-import com.wjh.util.ResponseUtil;
-import com.wjh.util.RowType;
+import com.wjh.enm.RowType;
+import com.wjh.entity.HttpRes;
+import com.wjh.post.HttpPost;
+import com.wjh.util.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -16,29 +16,31 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * httpClient会根据所用API自动加上请求头content-type，所以不要自己手动加content-type
+ * httpClient会根据所用API自动加上请求头content-type，
+ * 所以不要自己手动加content-type，
+ * 但为了防止传入的content-type影响httpClient设置content-type，
+ * 需在获取到charset将headMap中的content-type删除
  */
-public class HttpClientHttpPost implements HttpPost {
-    /**
-     * application/form-data
-     */
+public class HttpClientHttpPostImpl implements HttpPost {
     @Override
-    public HttpRes postFormData(String urlString, Map<String, String> headMap, Map<String, String> textParamMap, Map<String, File> binaryParamMap) throws Exception {
+    public HttpRes postFormData(String urlString,
+                                Map<String, String> headMap,
+                                Map<String, String> textParamMap,
+                                Map<String, File> binaryParamMap) throws Exception {
         CloseableHttpClient httpClient = RequestUtil.getHttpClient(urlString);
         org.apache.http.client.methods.HttpPost httpPost = new org.apache.http.client.methods.HttpPost(urlString);
         String mimeType = "application/form-data";
-        String charset = RequestUtil.getCharsetFromHeadMap(headMap);
+        String charset = HeadUtil.getCharsetFromHeadMap(headMap, "UTF-8");
 
         // 请求头
-        if (headMap != null) {
-            Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
-            for (Map.Entry<String, String> entry : entrySet) {
-                httpPost.setHeader(entry.getKey(), entry.getValue());
-            }
-        }
+        MapUtil.removeIgnoreCase(headMap, "content-type");// 防止传入的content-type影响httpClient设置content-type
+        HeadUtil.setHttpClientRequestHeader(httpPost, headMap, null);
 
         // 请求体-文本参数
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -63,22 +65,17 @@ public class HttpClientHttpPost implements HttpPost {
         return ResponseUtil.packHttpClientHttpRes(response);
     }
 
-    /**
-     * application/x-www-form-urlencoded
-     */
     @Override
-    public HttpRes postFormUrlEncoded(String urlString, Map<String, String> headMap, Map<String, String> textParamMap) throws Exception {
+    public HttpRes postFormUrlEncoded(String urlString,
+                                      Map<String, String> headMap,
+                                      Map<String, String> textParamMap) throws Exception {
         CloseableHttpClient httpClient = RequestUtil.getHttpClient(urlString);
         org.apache.http.client.methods.HttpPost httpPost = new org.apache.http.client.methods.HttpPost(urlString);
-        String charset = RequestUtil.getCharsetFromHeadMap(headMap);
+        String charset = HeadUtil.getCharsetFromHeadMap(headMap, Constant.DEFAULT_CHARSET);
 
         // 请求头
-        if (headMap != null) {
-            Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
-            for (Map.Entry<String, String> entry : entrySet) {
-                httpPost.setHeader(entry.getKey(), entry.getValue());
-            }
-        }
+        MapUtil.removeIgnoreCase(headMap, "content-type");// 防止传入的content-type影响httpClient设置content-type
+        HeadUtil.setHttpClientRequestHeader(httpPost, headMap, null);
 
         // 请求体
         List<NameValuePair> nameValuePairs = new ArrayList();
@@ -88,7 +85,6 @@ public class HttpClientHttpPost implements HttpPost {
                 nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
         }
-
         UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairs, charset);
         httpPost.setEntity(urlEncodedFormEntity);
 
@@ -96,13 +92,18 @@ public class HttpClientHttpPost implements HttpPost {
         return ResponseUtil.packHttpClientHttpRes(response);
     }
 
+
     @Override
-    public HttpRes postRow(RowType rowType, String urlString, Map<String, String> headMap, String textParamString) throws Exception {
+    public HttpRes postRow(RowType rowType,
+                           String urlString,
+                           Map<String, String> headMap,
+                           String textParamString) throws Exception {
         CloseableHttpClient httpClient = RequestUtil.getHttpClient(urlString);
         org.apache.http.client.methods.HttpPost httpPost = new org.apache.http.client.methods.HttpPost(urlString);
-        String charset = RequestUtil.getCharsetFromHeadMap(headMap);
         String mimeType = null;
+        String charset = HeadUtil.getCharsetFromHeadMap(headMap, Constant.DEFAULT_CHARSET);
 
+        // 请求头
         switch (rowType) {
             case JSON:
                 mimeType = "application/json";
@@ -111,16 +112,9 @@ public class HttpClientHttpPost implements HttpPost {
                 mimeType = "application/xml";
                 break;
         }
-
-        // 请求头
-        if (headMap == null) {
-            headMap = new HashMap();
-        }
-        headMap.put("content-type", mimeType + ";charset=" + charset);
-        Set<Map.Entry<String, String>> entrySet = headMap.entrySet();
-        for (Map.Entry<String, String> entry : entrySet) {
-            httpPost.setHeader(entry.getKey(), entry.getValue());
-        }
+        String contentType = mimeType + ";charset=" + charset;
+        MapUtil.removeIgnoreCase(headMap, "content-type");// 防止传入的content-type影响httpClient设置content-type
+        HeadUtil.setHttpClientRequestHeader(httpPost, headMap, contentType);
 
         // 请求体
         StringEntity stringEntity = new StringEntity(textParamString, charset);

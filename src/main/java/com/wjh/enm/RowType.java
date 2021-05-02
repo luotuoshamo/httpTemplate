@@ -1,4 +1,4 @@
-package com.wjh.util;
+package com.wjh.enm;
 
 /**
  * 请求体为row时的类型

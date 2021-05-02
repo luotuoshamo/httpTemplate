@@ -1,7 +1,8 @@
 package com.wjh;
 
-import com.wjh.util.HttpRes;
-import com.wjh.util.ImplWayEnum;
+import com.wjh.enm.ImplWayEnum;
+import com.wjh.entity.HttpRes;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -10,7 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpTemplateTest {
-    private HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
+    //private HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
+    private HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.JDK);
 
     @Test
     public void get() throws Exception {
@@ -30,6 +32,7 @@ public class HttpTemplateTest {
                 textParamMap
         );
         System.out.println(httpRes);
+        simpleAssert(httpRes);
     }
 
     @Test
@@ -47,12 +50,13 @@ public class HttpTemplateTest {
         // 文件参数
         Map<String, File> binaryParamMap = new HashMap();
         binaryParamMap.put("myFile", new File("d:/tmp/1.jpg"));
-        binaryParamMap.put("myFile2", new File("d:/tmp/2.jpg"));
-        binaryParamMap.put("myFile3", new File("d:/tmp/2.jpg"));
+        binaryParamMap.put("myFile2", new File("d:/tmp/1.jpg"));
+        binaryParamMap.put("myFile3", new File("d:/tmp/1.jpg"));
 
         HttpRes httpRes = httpTemplate.postFormData("http://localhost:8080/mockApi/postFormData",
                 headMap, textParamMap, binaryParamMap);
         System.out.println(httpRes);
+        simpleAssert(httpRes);
     }
 
     @Test
@@ -72,6 +76,7 @@ public class HttpTemplateTest {
                 headMap,
                 textParamMap);
         System.out.println(httpRes);
+        simpleAssert(httpRes);
     }
 
     @Test
@@ -89,6 +94,7 @@ public class HttpTemplateTest {
                 headMap,
                 jsonParam);
         System.out.println(httpRes);
+        simpleAssert(httpRes);
     }
 
 
@@ -112,6 +118,7 @@ public class HttpTemplateTest {
                 headMap,
                 xmlSb.toString());
         System.out.println(httpRes);
+        simpleAssert(httpRes);
     }
 
     @Test
@@ -124,5 +131,11 @@ public class HttpTemplateTest {
         FileOutputStream fos = new FileOutputStream("d:/tmp/1.png");
         fos.write(binaryResponseBody);
         fos.close();
+        simpleAssert(httpRes);
+    }
+
+    private void simpleAssert(HttpRes httpRes) {
+        Assert.assertNotNull(httpRes);
+        Assert.assertEquals(httpRes.getResponseCode(), "200");
     }
 }

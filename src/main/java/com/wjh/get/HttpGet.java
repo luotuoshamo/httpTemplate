@@ -1,6 +1,6 @@
 package com.wjh.get;
 
-import com.wjh.util.HttpRes;
+import com.wjh.entity.HttpRes;
 
 import java.util.Map;
 
