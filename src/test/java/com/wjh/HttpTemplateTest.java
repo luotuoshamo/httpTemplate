@@ -13,6 +13,9 @@ import java.util.Map;
 public class HttpTemplateTest {
     //private HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
     private HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.JDK);
+    private final String host = "47.95.192.195";
+    private final String port = "8087";
+    private final String urlPrefix = "http://" + host + ":" + port + "/mock";
 
     @Test
     public void get() throws Exception {
@@ -27,10 +30,11 @@ public class HttpTemplateTest {
         textParamMap.put("p2", "v2中文");
 
         HttpRes httpRes = httpTemplate.get(
-                "http://localhost:8080/mockApi/get",
+                urlPrefix + "/get",
                 headMap,
                 textParamMap
         );
+        System.out.println("get");
         System.out.println(httpRes);
         simpleAssert(httpRes);
     }
@@ -49,18 +53,19 @@ public class HttpTemplateTest {
 
         // 文件参数
         Map<String, File> binaryParamMap = new HashMap();
-        binaryParamMap.put("myFile", new File("d:/tmp/1.jpg"));
-        binaryParamMap.put("myFile2", new File("d:/tmp/1.jpg"));
-        binaryParamMap.put("myFile3", new File("d:/tmp/1.jpg"));
+        binaryParamMap.put("file1", new File("d:/tmp/1.jpg"));
+        binaryParamMap.put("file2", new File("d:/tmp/1.jpg"));
 
-        HttpRes httpRes = httpTemplate.postFormData("http://localhost:8080/mockApi/postFormData",
+        HttpRes httpRes = httpTemplate.postFormData(
+                urlPrefix + "/post_formData",
                 headMap, textParamMap, binaryParamMap);
+        System.out.println("postFormData");
         System.out.println(httpRes);
         simpleAssert(httpRes);
     }
 
     @Test
-    public void postUrlencoded() throws Exception {
+    public void postForUrlEncoded() throws Exception {
         // 请求头
         Map<String, String> headMap = new HashMap();
         headMap.put("h1", "v1");
@@ -72,9 +77,10 @@ public class HttpTemplateTest {
         textParamMap.put("p2", "v2中文");
 
         HttpRes httpRes = httpTemplate.postFormUrlEncoded(
-                "http://localhost:8080/mockApi/postUrlencoded",
+                urlPrefix + "/post_formUrlEncoded",
                 headMap,
                 textParamMap);
+        System.out.println("postForUrlEncoded");
         System.out.println(httpRes);
         simpleAssert(httpRes);
     }
@@ -90,9 +96,10 @@ public class HttpTemplateTest {
         String jsonParam = "{'k1':'v1','k2':'v2中文'}";
 
         HttpRes httpRes = httpTemplate.postJson(
-                "http://localhost:8080/mockApi/postJson",
+                urlPrefix + "/post_row",
                 headMap,
                 jsonParam);
+        System.out.println("postJson");
         System.out.println(httpRes);
         simpleAssert(httpRes);
     }
@@ -114,9 +121,10 @@ public class HttpTemplateTest {
         xmlSb.append("</root>");
 
         HttpRes httpRes = httpTemplate.postXml(
-                "http://localhost:8080/mockApi/postXml",
+                urlPrefix + "/post_row",
                 headMap,
                 xmlSb.toString());
+        System.out.println("postXml");
         System.out.println(httpRes);
         simpleAssert(httpRes);
     }
