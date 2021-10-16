@@ -79,7 +79,7 @@ public void get() throws Exception {
 
 #  示例-发POST请求
 
-## form textResponseBody
+## formData
 
 ```java
 @Test
