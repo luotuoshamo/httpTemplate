@@ -1,23 +1,55 @@
 # 概述
 
-* 该框架用于发送HTTP请求，目前支持发送GET、POST请求，其中POST请求支持form-data、x-www-form-urlencoded、json、xml
+jhttp用于发HTTP请求，目前支持发送GET和POST请求，其中POST请求支持form-data、x-www-form-urlencoded、json和xml；GET请无请求体，数据拼接在URL中，POST请求数据都放在请求体，URL不带数据。支持2种发请求的实现：JDK原生和Apache httpclient，默认JDK原生。
 
-* 该框架目前依赖JDK8和Apache HttpClient 4.5.13，但使用时无需加入httpClient的依赖
+# 依赖
 
-* 版本1.1.0开始加入Apache HttpClient的实现，可通过构造方法切换实现：
+| 依赖              | 版本   | maven自动下载依赖，使用时无需手动添加 |
+| ----------------- | ------ | ------------------------------------- |
+| JDK               | 1.8    | N                                     |
+| Apache httpclient | 4.5.13 | Y                                     |
+| Apache httpmime   | 4.5.13 | Y                                     |
 
-  ```java
-  // jdk
-  HttpTemplate httpTemplate = new HttpTemplate();
-  
-  // jdk
-  HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.JDK);
-  
-  // httpClient
-  HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
-  ```
+# 使用
 
-# 发GET请求
+* pom.xml中添加依赖
+
+```xml
+<repositories>
+    <repository>
+        <id>jmail</id>
+        <name>GitHub OWNER Apache Maven Packages</name>
+        <url>https://topicstudy.github.io/jhttp/maven-repo/</url>
+    </repository>
+</repositories>
+<dependencies>
+    <dependency>
+        <groupId>com.wjh</groupId>
+        <artifactId>jhttp</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+</dependencies>
+```
+
+>加入上面的配置后`mvn install`一下；如果还是爆红需要重启IDEA
+>
+>如果`mvn install`失败过，请删掉本地maven仓库中安装失败的项目，在执行`mvn 
+
+
+* 指定发请求的实现
+
+```java
+// jdk
+HttpTemplate httpTemplate = new HttpTemplate();
+
+// jdk
+HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.JDK);
+
+// httpClient
+HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
+```
+
+# 示例-发GET请求
 
 get请求无请求体，参数放在地址中
 
@@ -45,7 +77,7 @@ public void get() throws Exception {
 }
 ```
 
-#  发POST请求
+#  示例-发POST请求
 
 ## form textResponseBody
 
@@ -158,9 +190,12 @@ public void postXml() throws Exception {
 }
 ```
 
-# 反馈
+ # 联系我
 
-新功能、BUG、建议...都可在issues中提，也欢迎pull requestヾ(≧▽≦*)o
+| 微信   | topicstudy                    |
+| ------ | ----------------------------- |
+| Gitee  | https://gitee.com/topicstudy  |
+| Github | https://github.com/topicstudy |
 
 
 
