@@ -24,7 +24,7 @@ jhttp用于发HTTP请求，目前支持发送GET和POST请求，其中POST请求
     <dependency>
         <groupId>com.wjh</groupId>
         <artifactId>jhttp</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 </dependencies>
 ```
