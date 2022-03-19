@@ -7,7 +7,7 @@
     <groupId>com.wjh</groupId>
     <artifactId>jhttp</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>Java发HTTP请求的工具</description>
 
     <build>

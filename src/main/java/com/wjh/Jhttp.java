@@ -16,17 +16,16 @@ import java.util.Map;
 /**
  * 入口
  */
-@Deprecated
-public class HttpTemplate {
-    private ImplWayEnum implWay; // 底层实现
+public class Jhttp {
+    private ImplWayEnum implWay;
     private HttpGet httpGet;
     private HttpPost httpPost;
 
-    public HttpTemplate() {
+    public Jhttp() {
         this(ImplWayEnum.JDK);
     }
 
-    public HttpTemplate(ImplWayEnum implWay) {
+    public Jhttp(ImplWayEnum implWay) {
         this.implWay = implWay;
 
         switch (this.implWay) {
