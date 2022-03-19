@@ -40,10 +40,16 @@ public class Jhttp {
         }
     }
 
+    @Deprecated
     public HttpRes get(String urlString,
                        Map<String, String> headerMap,
                        Map<String, String> textParamMap) throws Exception {
         return httpGet.get(urlString, headerMap, textParamMap);
+    }
+
+    public HttpRes get(String urlString,
+                       Map<String, String> headerMap) throws Exception {
+        return httpGet.get(urlString, headerMap, null);
     }
 
     public HttpRes postFormData(String urlString,
@@ -67,5 +73,9 @@ public class Jhttp {
                            Map<String, String> headMap,
                            String xmlParam) throws Exception {
         return httpPost.postRow(RowType.XML, urlString, headMap, xmlParam);
+    }
+
+    public HttpRes postRow(String urlString, Map<String, String> headMap, String row) throws Exception {
+        return httpPost.postRow(null, urlString, headMap, row);
     }
 }
