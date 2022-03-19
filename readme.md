@@ -3,15 +3,13 @@
 jhttp用于发HTTP请求，目前支持发送GET和POST请求，其中POST请求支持form-data、x-www-form-urlencoded、json和xml；GET请无请求体，数据拼接在URL中，POST请求数据都放在请求体，URL不带数据。支持2种发请求的实现：JDK原生和Apache httpclient，默认JDK原生。
 
 # 依赖
-
-| 依赖              | 版本   | maven自动下载依赖，使用时无需手动添加 |
-| ----------------- | ------ | ------------------------------------- |
-| JDK               | 1.8    | N                                     |
-| Apache httpclient | 4.5.13 | Y                                     |
-| Apache httpmime   | 4.5.13 | Y                                     |
+| 依赖              | 版本     | 
+| ----------------- | ------ |
+| JDK               | 1.8    | 
+| Apache httpclient | 4.5.13 |
+| Apache httpmime   | 4.5.13 |
 
 # 使用
-
 * pom.xml中添加依赖
 
 ```xml
@@ -40,13 +38,13 @@ jhttp用于发HTTP请求，目前支持发送GET和POST请求，其中POST请求
 
 ```java
 // jdk
-HttpTemplate httpTemplate = new HttpTemplate();
+Jhttp jhttp = new Jhttp();
 
 // jdk
-HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.JDK);
+Jhttp jhttp = new Jhttp(ImplWayEnum.JDK);
 
 // httpClient
-HttpTemplate httpTemplate = new HttpTemplate(ImplWayEnum.HTTP_CLIENT);
+Jhttp jhttp = new Jhttp(ImplWayEnum.HTTP_CLIENT);
 ```
 
 # 示例-发GET请求
@@ -56,7 +54,7 @@ get请求无请求体，参数放在地址中
 ```java
 @Test
 public void get() throws Exception {
-	HttpTemplate httpTemplate = new HttpTemplate();
+	Jhttp jhttp = new Jhttp();
 	
     // 请求头
 	Map<String, String> headMap = new HashMap();
@@ -68,7 +66,7 @@ public void get() throws Exception {
 	textParamMap.put("p1", "v1");
 	textParamMap.put("p2", "v1");
     
-	HttpRes httpRes = httpTemplate.get(
+	HttpRes httpRes = jhttp.get(
                 "http://localhost:8080/mockApi/get",
                  headMap, 
                  textParamMap
@@ -84,7 +82,7 @@ public void get() throws Exception {
 ```java
 @Test
 public void postFormData() throws Exception {
-	HttpTemplate httpTemplate = new HttpTemplate();
+	Jhttp jhttp = new Jhttp();
     
     // 请求头
 	Map<String, String> headMap = new HashMap();
@@ -103,7 +101,7 @@ public void postFormData() throws Exception {
 	binaryParamMap.put("myFile2", new File("d:/tmp/2.jpg"));
 	binaryParamMap.put("myFile3", new File("d:/tmp/2.jpg"));
 
-	HttpRes httpRes = httpTemplate.postFormData(
+	HttpRes httpRes = jhttp.postFormData(
         "http://localhost:8080/mockApi/postFormData",
 		headMap, 
          textParamMap, 
@@ -118,7 +116,7 @@ public void postFormData() throws Exception {
 ```java
 @Test
 public void postUrlencoded() throws Exception {
-	HttpTemplate httpTemplate = new HttpTemplate();
+	Jhttp jhttp = new Jhttp();
 
     // 请求头
 	Map<String, String> headMap = new HashMap();
@@ -130,7 +128,7 @@ public void postUrlencoded() throws Exception {
 	textParamMap.put("p1", "v1");
 	textParamMap.put("p2", "v2");
 
-	HttpRes httpRes = httpTemplate.postFormUrlEncoded(
+	HttpRes httpRes = jhttp.postFormUrlEncoded(
 		"http://localhost:8080/mockApi/postUrlencoded",
 		 headMap,
 		 textParamMap
@@ -144,7 +142,7 @@ public void postUrlencoded() throws Exception {
 ```java
 @Test
 public void postJson() throws Exception {
-	HttpTemplate httpTemplate = new HttpTemplate();
+	Jhttp jhttp = new Jhttp();
 
 	// 请求头
 	Map<String, String> headMap = new HashMap();
@@ -154,7 +152,7 @@ public void postJson() throws Exception {
 	// 参数
 	String jsonParam = "{'k1':'v1','k2':'v2'}";
 
-	HttpRes httpRes = httpTemplate.postJson(
+	HttpRes httpRes = jhttp.postJson(
 			"http://localhost:8080/mockApi/postJson",
 			headMap,
 			jsonParam);
@@ -167,7 +165,7 @@ public void postJson() throws Exception {
 ```java
 @Test
 public void postXml() throws Exception {
-	HttpTemplate httpTemplate = new HttpTemplate();
+	Jhttp jhttp = new Jhttp();
 
 	// 请求头
 	Map<String, String> headMap = new HashMap();
@@ -182,7 +180,7 @@ public void postXml() throws Exception {
 	xmlSb.append("<age>wjh</age>");
 	xmlSb.append("</root>");
 
-	HttpRes httpRes = httpTemplate.postXml(
+	HttpRes httpRes = jhttp.postXml(
 			"http://localhost:8080/mockApi/postXml",
 			headMap,
 			xmlSb.toString());
