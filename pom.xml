@@ -4,19 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wjh</groupId>
+    <!--project meta info-->
+    <groupId>io.github.topicstudy</groupId>
     <artifactId>jhttp</artifactId>
+    <version>1.1.1</version>
+    <name>jhttp</name>
     <packaging>jar</packaging>
-    <version>1.0.1</version>
-    <description>Java发HTTP请求的工具</description>
+    <description>send http by java</description>
+    <url>http://github.com/topicstudy/${artifactId}</url>
+
+    <organization>
+        <name>topicstudy</name>
+        <url>http://topicstudy.cn</url>
+    </organization>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <charset>UTF-8</charset>
+        <javaVersion>1.8</javaVersion>
+        <gpgKeyName>0x143D3FFA</gpgKeyName>
     </properties>
-    <!--    sonatype start-->
-    <name>jhttp</name>
-    <url>http://www.topicstudy.cn/</url>
 
     <licenses>
         <license>
@@ -25,124 +31,88 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git@github.com:${organization.name}/${artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:${organization.name}/${artifactId}.git</developerConnection>
+        <url>git@github.com:${organization.name}/${artifactId}.git</url>
+    </scm>
+
     <developers>
         <developer>
             <name>topicstudy</name>
             <email>topicstudy@163.com</email>
+            <url>http://topicstudy.cn</url>
         </developer>
     </developers>
-    <!--soft configuration management
-    https://blog.csdn.net/houzhizhen/article/details/69229977-->
-    <scm>
-        <connection>scm:git:git@github.com:topicstudy/jhttp.git</connection>
-        <developerConnection>scm:git:git@github.com:topicstudy/jhttp.git</developerConnection>
-        <url>git@github.com:topicstudy/jhttp.git</url>
-    </scm>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <!-- Source -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>2.2.1</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- Javadoc -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- GPG -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
-                        <executions>
-                            <execution>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>oss</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-                </snapshotRepository>
-                <repository>
-                    <id>oss</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-    </profiles>
-
-    <!--    soonatype end-->
 
     <build>
         <plugins>
-            <!--用于编译-->
+            <!--mvn basic plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
-                <configuration>
-                    <skipTests>true</skipTests>
+                    <source>${javaVersion}</source>
+                    <target>${javaVersion}</target>
+                    <encoding>${charset}</encoding>
                 </configuration>
             </plugin>
 
+            <!--to generate signature file (.asc) for packaging results which will upload to the central repository,
+            required by sonatype-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <!--If there are multiple gpg keys, the keyname be specified,
+                            list keyname by: gpg {dash x2} list-signatures {dash x2}keyid-format 0xshort
+                            the sig3 is keyname-->
+                            <keyname>${gpgKeyName}</keyname>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--to package out the source (artifactId-version-sources.jar)-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--to package out the javadoc (artifactId-version-javadoc.jar)-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>2.9.1</version>
                 <configuration>
-                    <encoding>${chartset.UTF8}</encoding>
-                    <aggregate>true</aggregate>
-                    <charset>${chartset.UTF8}</charset>
-                    <docencoding>${chartset.UTF8}</docencoding>
+                    <charset>${charset}</charset>
+                    <encoding>${charset}</encoding>
+                    <excludePackageNames>cn.topicstudy</excludePackageNames>
                 </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -150,11 +120,16 @@
     </build>
 
     <distributionManagement>
+        <!--sonatype start-->
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>local-repo-release</id>
-            <name>GitHub Release</name>
-            <url>file://${project.basedir}/maven-repo</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <!--sonatype end-->
     </distributionManagement>
 
     <dependencies>
