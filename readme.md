@@ -134,10 +134,12 @@ public void postJson() throws Exception {
 	// 参数
 	String jsonParam = "{'k1':'v1','k2':'v2'}";
 
+    // 或 jhttp.postRow since 1.1.2
 	HttpRes httpRes = jhttp.postJson(
 			"http://localhost:8080/mockApi/postJson",
 			headMap,
 			jsonParam);
+   
 	System.out.println(httpRes);
 }
 ```
@@ -162,6 +164,7 @@ public void postXml() throws Exception {
 	xmlSb.append("<age>wjh</age>");
 	xmlSb.append("</root>");
 
+    // 或 jhttp.postRow since 1.1.2
 	HttpRes httpRes = jhttp.postXml(
 			"http://localhost:8080/mockApi/postXml",
 			headMap,

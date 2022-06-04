@@ -8,7 +8,7 @@
     <groupId>io.github.topicstudy</groupId>
     <artifactId>jhttp</artifactId>
     <version>1.1.2</version>
-    <name>jhttp</name>
+    <name>io.github.topicstudy:jhttp</name>
     <packaging>jar</packaging>
     <description>send http by java</description>
     <url>http://github.com/topicstudy/jhttp</url>
@@ -32,7 +32,7 @@
         </license>
     </licenses>
 
-    <!--required by sonatype-->
+    <!--required by sonatype，format as ${project.groupId} can not be parsed by sonatype-->
     <scm>
         <connection>scm:git:git@github.com:topicstudy/jhttp.git</connection>
         <developerConnection>scm:git:git@github.com:topicstudy/jhttp.git</developerConnection>
