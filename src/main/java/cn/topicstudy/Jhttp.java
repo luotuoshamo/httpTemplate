@@ -74,4 +74,10 @@ public class Jhttp {
                            String xmlParam) throws Exception {
         return httpPost.postRow(RowType.XML, urlString, headMap, xmlParam);
     }
+
+    public HttpRes postRow(String urlString,
+                           Map<String, String> headMap,
+                           String xmlParam, RowType rowType) throws Exception {
+        return httpPost.postRow(rowType, urlString, headMap, xmlParam);
+    }
 }

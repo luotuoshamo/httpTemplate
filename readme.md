@@ -1,53 +1,35 @@
 # 概述
 
-jhttp用于发HTTP请求，目前支持发送GET和POST请求，其中POST请求支持form-data、x-www-form-urlencoded、json和xml；GET请无请求体，数据拼接在URL中，POST请求数据都放在请求体，URL不带数据。支持2种发请求的实现：JDK原生和Apache httpclient，默认JDK原生。
-
-# 依赖
-| 依赖              | 版本     | 
-| ----------------- | ------ |
-| JDK               | 1.8    | 
-| Apache httpclient | 4.5.13 |
-| Apache httpmime   | 4.5.13 |
+jhttp用于发HTTP请求，目前支持发送GET和POST请求，其中POST请求支持form-data、x-www-form-urlencoded、json和xml；GET请无请求体，数据拼接在URL中，POST请求数据都放在请求体，URL不带数据。支持2种发请求的实现：JDK原生和Apache httpclient，默认JDK原生
 
 # 使用
-* pom.xml中添加依赖
+* 依赖
 
 ```xml
-<repositories>
-    <repository>
-        <id>jmail</id>
-        <name>GitHub OWNER Apache Maven Packages</name>
-        <url>https://topicstudy.github.io/jhttp/maven-repo/</url>
-    </repository>
-</repositories>
-<dependencies>
-    <dependency>
-        <groupId>com.wjh</groupId>
-        <artifactId>jhttp</artifactId>
-        <version>1.0.1</version>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>io.github.topicstudy</groupId>
+    <artifactId>jhttp</artifactId>
+    <version>1.1.2</version>
+</dependency>
 ```
 
->加入上面的配置后`mvn install`一下；如果还是爆红需要重启IDEA
->
->如果`mvn install`失败过，请删掉本地maven仓库中安装失败的项目，在执行`mvn 
 
-
-* 指定发请求的实现
+* 指定实现方式
 
 ```java
-// jdk
+// 默认是直接用jdk发请求
 Jhttp jhttp = new Jhttp();
 
 // jdk
-Jhttp jhttp = new Jhttp(ImplWayEnum.JDK);
+Jhttp jhttp = new Jhttp(HttpSendWayEnum.JDK);
 
 // httpClient
-Jhttp jhttp = new Jhttp(ImplWayEnum.HTTP_CLIENT);
+Jhttp jhttp = new Jhttp(HttpSendWayEnum.HTTP_CLIENT);
 ```
 
-# 示例-发GET请求
+# 示例
+
+## 发GET请求
 
 get请求无请求体，参数放在地址中
 
@@ -75,9 +57,9 @@ public void get() throws Exception {
 }
 ```
 
-#  示例-发POST请求
+## 发POST请求
 
-## formData
+### formData
 
 ```java
 @Test
@@ -111,7 +93,7 @@ public void postFormData() throws Exception {
 }
 ```
 
-## x-www-form-urlencode
+### x-www-form-urlencode
 
 ```java
 @Test
@@ -137,7 +119,7 @@ public void postUrlencoded() throws Exception {
 }
 ```
 
-## json
+### json
 
 ```java
 @Test
@@ -160,7 +142,7 @@ public void postJson() throws Exception {
 }
 ```
 
-## xml
+### xml
 
 ```java
 @Test
@@ -187,15 +169,6 @@ public void postXml() throws Exception {
 	System.out.println(httpRes);
 }
 ```
-
- # 联系我
-
-| 微信   | topicstudy                    |
-| ------ | ----------------------------- |
-| Gitee  | https://gitee.com/topicstudy  |
-| Github | https://github.com/topicstudy |
-
-
 
 
 

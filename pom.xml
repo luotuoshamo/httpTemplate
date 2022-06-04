@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--project meta info-->
+    <!--project meta info, required by sonatype-->
     <groupId>io.github.topicstudy</groupId>
     <artifactId>jhttp</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <name>jhttp</name>
     <packaging>jar</packaging>
     <description>send http by java</description>
-    <url>http://github.com/topicstudy/${artifactId}</url>
+    <url>http://github.com/topicstudy/jhttp</url>
 
     <organization>
         <name>topicstudy</name>
@@ -24,6 +24,7 @@
         <gpgKeyName>0x143D3FFA</gpgKeyName>
     </properties>
 
+    <!--required by sonatype-->
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -31,12 +32,14 @@
         </license>
     </licenses>
 
+    <!--required by sonatype-->
     <scm>
-        <connection>scm:git:git@github.com:${organization.name}/${artifactId}.git</connection>
-        <developerConnection>scm:git:git@github.com:${organization.name}/${artifactId}.git</developerConnection>
-        <url>git@github.com:${organization.name}/${artifactId}.git</url>
+        <connection>scm:git:git@github.com:topicstudy/jhttp.git</connection>
+        <developerConnection>scm:git:git@github.com:topicstudy/jhttp.git</developerConnection>
+        <url>git@github.com:topicstudy/jhttp.git</url>
     </scm>
 
+    <!--required by sonatype-->
     <developers>
         <developer>
             <name>topicstudy</name>
@@ -82,7 +85,7 @@
                 </executions>
             </plugin>
 
-            <!--to package out the source (artifactId-version-sources.jar)-->
+            <!--to package out the source (artifactId-version-sources.jar), required by sonatype-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -97,7 +100,7 @@
                 </executions>
             </plugin>
 
-            <!--to package out the javadoc (artifactId-version-javadoc.jar)-->
+            <!--to package out the javadoc (artifactId-version-javadoc.jar), required by sonatype-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
