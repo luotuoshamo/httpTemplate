@@ -1,5 +1,6 @@
 package cn.topicstudy;
 
+import cn.topicstudy.entity.HttpRes;
 import cn.topicstudy.enums.HttpSendWayEnum;
 import org.junit.After;
 import org.junit.Before;
@@ -44,6 +45,12 @@ public class JhttpTest {
     }
 
     @Test
-    public void postRow() {
+    public void postRow() throws Exception {
+        Jhttp jhttp = new Jhttp(HttpSendWayEnum.JDK);
+        HttpRes httpRes = jhttp.postJson("http://127.0.0.1:8080/test/postJSON", null,
+                "{}");
+        System.out.println(httpRes.getResponseHeadMap());
+        System.out.println(httpRes.getTextResponseBody());
+
     }
 }

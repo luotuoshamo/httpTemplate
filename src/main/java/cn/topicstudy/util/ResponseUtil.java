@@ -7,7 +7,10 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.List;
@@ -47,11 +50,26 @@ public class ResponseUtil {
         }
         // 正常数据
         InputStream is = httpURLConnection.getInputStream();
-        byte[] bytes = IOUtil.inputStreamToBytes(is);
-        httpRes.setBinaryResponseBody(bytes);
-        httpRes.setTextResponseBody(new String(bytes, responseCharset));
+        String str = inputStream2Str(is);
+        if (str != null) {
+            httpRes.setBinaryResponseBody(str.getBytes(responseCharset));
+            httpRes.setTextResponseBody(str);
+        }
 
         return httpRes;
+    }
+
+    private static String inputStream2Str(InputStream inputStream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+
+        String result = sb.toString();
+        return result;
     }
 
     /**
