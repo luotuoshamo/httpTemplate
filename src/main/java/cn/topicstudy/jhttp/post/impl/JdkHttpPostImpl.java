@@ -1,9 +1,9 @@
-package cn.topicstudy.post.impl;
+package cn.topicstudy.jhttp.post.impl;
 
-import cn.topicstudy.enums.RowType;
-import cn.topicstudy.entity.HttpRes;
-import cn.topicstudy.util.*;
-import cn.topicstudy.post.HttpPost;
+import cn.topicstudy.jhttp.entity.HttpRes;
+import cn.topicstudy.jhttp.enums.RowType;
+import cn.topicstudy.jhttp.post.HttpPost;
+import cn.topicstudy.jhttp.util.*;
 
 import java.io.File;
 import java.io.OutputStream;

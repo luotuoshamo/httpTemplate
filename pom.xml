@@ -7,7 +7,7 @@
     <!--project meta info, required by sonatype-->
     <groupId>io.github.topicstudy</groupId>
     <artifactId>jhttp</artifactId>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <name>io.github.topicstudy:jhttp</name>
     <packaging>jar</packaging>
     <description>send http request by java</description>
@@ -153,6 +153,11 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>4.5.13</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.topicstudy</groupId>
+            <artifactId>jutil</artifactId>
+            <version>3.3.1</version>
         </dependency>
     </dependencies>
 </project>

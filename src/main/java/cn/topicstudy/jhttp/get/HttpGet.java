@@ -1,6 +1,6 @@
-package cn.topicstudy.get;
+package cn.topicstudy.jhttp.get;
 
-import cn.topicstudy.entity.HttpRes;
+import cn.topicstudy.jhttp.entity.HttpRes;
 
 import java.util.Map;
 

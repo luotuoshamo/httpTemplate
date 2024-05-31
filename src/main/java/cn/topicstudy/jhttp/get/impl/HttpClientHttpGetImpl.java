@@ -1,8 +1,8 @@
-package cn.topicstudy.get.impl;
+package cn.topicstudy.jhttp.get.impl;
 
-import cn.topicstudy.get.HttpGet;
-import cn.topicstudy.util.*;
-import cn.topicstudy.entity.HttpRes;
+import cn.topicstudy.jhttp.entity.HttpRes;
+import cn.topicstudy.jhttp.get.HttpGet;
+import cn.topicstudy.jhttp.util.*;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 

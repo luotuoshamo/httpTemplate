@@ -1,12 +1,10 @@
-package cn.topicstudy;
+package cn.topicstudy.jhttp;
 
-import cn.topicstudy.entity.HttpRes;
-import cn.topicstudy.enums.HttpSendWayEnum;
+import cn.topicstudy.jhttp.entity.HttpRes;
+import cn.topicstudy.jhttp.enums.HttpSendWayEnum;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class JhttpTest {
     private Jhttp jhttpJdk = new Jhttp();
@@ -45,7 +43,7 @@ public class JhttpTest {
     }
 
     @Test
-    public void postRow() throws Exception {
+    public void postRow() {
         Jhttp jhttp = new Jhttp(HttpSendWayEnum.JDK);
         HttpRes httpRes = jhttp.postJson("http://127.0.0.1:8080/test/postJSON", null,
                 "{}");

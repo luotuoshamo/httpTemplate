@@ -1,6 +1,6 @@
-package cn.topicstudy.util;
+package cn.topicstudy.jhttp.util;
 
-import cn.topicstudy.entity.HttpRes;
+import cn.topicstudy.jhttp.entity.HttpRes;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
@@ -28,6 +28,7 @@ public class ResponseUtil {
         // 响应码
         int responseCode = httpURLConnection.getResponseCode();
         httpRes.setResponseCode(responseCode + "");
+        httpRes.setResponseMessage(httpURLConnection.getResponseMessage());
 
         // 响应头
         HashMap responseHeadMap = new HashMap();
@@ -81,6 +82,7 @@ public class ResponseUtil {
         StatusLine responseStatusLine = response.getStatusLine();
         int statusCode = responseStatusLine.getStatusCode();
         httpRes.setResponseCode(statusCode + "");
+        httpRes.setResponseMessage(responseStatusLine.getReasonPhrase());
 
         // 响应头
         Map<String, String> responseHeadMap = new HashMap();

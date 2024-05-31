@@ -1,10 +1,15 @@
-package cn.topicstudy.entity;
+package cn.topicstudy.jhttp.entity;
+
+import lombok.Data;
 
 import java.util.Map;
 
+@Data
 public class HttpRes {
     // 响应码（属于响应行）
     private String responseCode;
+
+    private String responseMessage;
     // 响应头
     private Map<String, String> responseHeadMap;
     // 响应体-文本
@@ -15,46 +20,6 @@ public class HttpRes {
     private String textErrorResponseBody;
 
     public HttpRes() {
-    }
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
-    }
-
-    public Map<String, String> getResponseHeadMap() {
-        return responseHeadMap;
-    }
-
-    public void setResponseHeadMap(Map<String, String> responseHeadMap) {
-        this.responseHeadMap = responseHeadMap;
-    }
-
-    public String getTextResponseBody() {
-        return textResponseBody;
-    }
-
-    public void setTextResponseBody(String textResponseBody) {
-        this.textResponseBody = textResponseBody;
-    }
-
-    public byte[] getBinaryResponseBody() {
-        return binaryResponseBody;
-    }
-
-    public void setBinaryResponseBody(byte[] binaryResponseBody) {
-        this.binaryResponseBody = binaryResponseBody;
-    }
-
-    public String getTextErrorResponseBody() {
-        return textErrorResponseBody;
-    }
-
-    public void setTextErrorResponseBody(String textErrorResponseBody) {
-        this.textErrorResponseBody = textErrorResponseBody;
     }
 
     @Override
@@ -69,6 +34,7 @@ public class HttpRes {
 
         return "HttpRes{" +
                 "responseCode='" + responseCode + '\'' +
+                "responseMessage='" + responseMessage + '\'' +
                 ", responseHeadMap=" + responseHeadMap +
                 ", textResponseBody='" + textResponseBody + '\'' +
                 ", binaryResponseBody=" + s +

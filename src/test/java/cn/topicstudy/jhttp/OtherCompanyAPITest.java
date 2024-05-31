@@ -1,6 +1,6 @@
-package cn.topicstudy;
+package cn.topicstudy.jhttp;
 
-import cn.topicstudy.entity.HttpRes;
+import cn.topicstudy.jhttp.entity.HttpRes;
 import org.junit.Test;
 
 import java.util.HashMap;

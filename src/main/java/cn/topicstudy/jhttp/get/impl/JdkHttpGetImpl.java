@@ -1,11 +1,11 @@
-package cn.topicstudy.get.impl;
+package cn.topicstudy.jhttp.get.impl;
 
-import cn.topicstudy.get.HttpGet;
-import cn.topicstudy.entity.HttpRes;
-import cn.topicstudy.util.Constant;
-import cn.topicstudy.util.HeadUtil;
-import cn.topicstudy.util.MapUtil;
-import cn.topicstudy.util.ResponseUtil;
+import cn.topicstudy.jhttp.entity.HttpRes;
+import cn.topicstudy.jhttp.util.Constant;
+import cn.topicstudy.jhttp.util.HeadUtil;
+import cn.topicstudy.jhttp.util.MapUtil;
+import cn.topicstudy.jhttp.util.ResponseUtil;
+import cn.topicstudy.jhttp.get.HttpGet;
 
 import java.net.HttpURLConnection;
 import java.net.URL;

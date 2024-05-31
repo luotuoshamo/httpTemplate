@@ -1,7 +1,7 @@
-package cn.topicstudy.post;
+package cn.topicstudy.jhttp.post;
 
-import cn.topicstudy.enums.RowType;
-import cn.topicstudy.entity.HttpRes;
+import cn.topicstudy.jhttp.entity.HttpRes;
+import cn.topicstudy.jhttp.enums.RowType;
 
 import java.io.File;
 import java.util.Map;

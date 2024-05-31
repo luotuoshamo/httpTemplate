@@ -1,4 +1,4 @@
-package cn.topicstudy.util;
+package cn.topicstudy.jhttp.util;
 
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;

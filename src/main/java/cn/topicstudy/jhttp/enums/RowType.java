@@ -1,4 +1,4 @@
-package cn.topicstudy.enums;
+package cn.topicstudy.jhttp.enums;
 
 /**
  * 请求体为row时的类型

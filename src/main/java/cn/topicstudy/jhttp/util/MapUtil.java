@@ -1,4 +1,4 @@
-package cn.topicstudy.util;
+package cn.topicstudy.jhttp.util;
 
 import java.net.URLEncoder;
 import java.util.Map;
