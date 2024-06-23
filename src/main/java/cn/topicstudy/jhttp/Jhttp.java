@@ -11,6 +11,7 @@ import cn.topicstudy.jhttp.post.HttpPost;
 import cn.topicstudy.jhttp.post.impl.HttpClientHttpPostImpl;
 import cn.topicstudy.jhttp.post.impl.JdkHttpPostImpl;
 import cn.topicstudy.jutil.basic.error.CommonAssertUtil;
+import com.alibaba.fastjson2.JSON;
 
 import java.io.File;
 import java.util.Map;
@@ -61,15 +62,12 @@ public class Jhttp {
         }
     }
 
-    public HttpRes get(String urlString,
-                       Map<String, String> headerMap) {
-        try {
-            HttpRes httpRes = httpGet.get(urlString, headerMap, null);
-            checkHttpRes(httpRes);
-            return httpRes;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public <T> T getForObject(String urlString,
+                              Map<String, String> headerMap,
+                              Map<String, String> textParamMap,
+                              Class<T> cls) {
+        HttpRes httpRes = get(urlString, headerMap, textParamMap);
+        return JSON.parseObject(httpRes.getTextResponseBody(), cls);
     }
 
     public HttpRes postFormData(String urlString,
@@ -86,6 +84,15 @@ public class Jhttp {
         }
     }
 
+    public <T> T postFormDataForObject(String urlString,
+                                       Map<String, String> headerMap,
+                                       Map<String, String> textParamMap,
+                                       Map<String, File> fileParamMap,
+                                       Class<T> cls) {
+        HttpRes httpRes = postFormData(urlString, headerMap, textParamMap, fileParamMap);
+        return JSON.parseObject(httpRes.getTextResponseBody(), cls);
+    }
+
     public HttpRes postFormUrlEncoded(String urlString,
                                       Map<String, String> headMap,
                                       Map<String, String> textParamMap) {
@@ -98,6 +105,14 @@ public class Jhttp {
         }
     }
 
+    public <T> T postFormUrlEncodedForObject(String urlString,
+                                             Map<String, String> headMap,
+                                             Map<String, String> textParamMap,
+                                             Class<T> cls) {
+        HttpRes httpRes = postFormUrlEncoded(urlString, headMap, textParamMap);
+        return JSON.parseObject(httpRes.getTextResponseBody(), cls);
+    }
+
     public HttpRes postJson(String urlString, Map<String, String> headMap, String jsonParam) {
         try {
             HttpRes httpRes = httpPost.postRow(RowType.JSON, urlString, headMap, jsonParam);
@@ -108,10 +123,14 @@ public class Jhttp {
         }
     }
 
+    public <T> T postJsonForObject(String urlString, Map<String, String> headMap, String jsonParam, Class<T> cls) {
+        HttpRes httpRes = postJson(urlString, headMap, jsonParam);
+        return JSON.parseObject(httpRes.getTextResponseBody(), cls);
+    }
+
     public HttpRes postXml(String urlString,
                            Map<String, String> headMap,
                            String xmlParam) {
-
         try {
             HttpRes httpRes = httpPost.postRow(RowType.XML, urlString, headMap, xmlParam);
             checkHttpRes(httpRes);
@@ -121,11 +140,19 @@ public class Jhttp {
         }
     }
 
+    public <T> T postXmlForObject(String urlString,
+                                  Map<String, String> headMap,
+                                  String xmlParam,
+                                  Class<T> cls) {
+        HttpRes httpRes = postXml(urlString, headMap, xmlParam);
+        return JSON.parseObject(httpRes.getTextResponseBody(), cls);
+    }
+
     public HttpRes postRow(String urlString,
                            Map<String, String> headMap,
-                           String xmlParam, RowType rowType) {
+                           String rowText, RowType rowType) {
         try {
-            HttpRes httpRes = httpPost.postRow(rowType, urlString, headMap, xmlParam);
+            HttpRes httpRes = httpPost.postRow(rowType, urlString, headMap, rowText);
             checkHttpRes(httpRes);
             return httpRes;
         } catch (Exception e) {
@@ -133,11 +160,18 @@ public class Jhttp {
         }
     }
 
-    private void checkHttpRes(HttpRes res) {
-        if (res == null) {
-            return;
-        }
+    public <T> T postRowForObject(String urlString,
+                                  Map<String, String> headMap,
+                                  String rowText, RowType rowType,
+                                  Class<T> cls) {
+        HttpRes httpRes = postRow(urlString, headMap, rowText, rowType);
+        return JSON.parseObject(httpRes.getTextResponseBody(), cls);
+    }
 
+    /**
+     * @param res must be not null.
+     */
+    private void checkHttpRes(HttpRes res) {
         CommonAssertUtil.throwException(!"200".equals(res.getResponseCode()), JhttpErrorCodeEnum.STATUS_CODE_NOT_200,
                 res.getResponseCode(), res.getResponseMessage());
 

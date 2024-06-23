@@ -4,11 +4,13 @@ import cn.topicstudy.jhttp.entity.HttpRes;
 import cn.topicstudy.jhttp.enums.RowType;
 import cn.topicstudy.jhttp.post.HttpPost;
 import cn.topicstudy.jhttp.util.*;
+import cn.topicstudy.jutil.basic.text.StringUtil;
 
 import java.io.File;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Struct;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -135,7 +137,9 @@ public class JdkHttpPostImpl implements HttpPost {
         OutputStream os = httpURLConnection.getOutputStream();
 
         // 请求体
-        os.write(textParamString.getBytes(charset));
+        if (StringUtil.isNotBlank(textParamString)) {
+            os.write(textParamString.getBytes(charset));
+        }
 
         return ResponseUtil.packJdkHttpRes(httpURLConnection);
     }

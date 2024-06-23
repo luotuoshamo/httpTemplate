@@ -46,7 +46,7 @@ public class ResponseUtil {
         InputStream errIs = httpURLConnection.getErrorStream();
         if (errIs != null) {
             String errMsg = IOUtil.inputStreamToString(errIs, responseCharset);
-            httpRes.setTextErrorResponseBody(errMsg);
+            httpRes.setResponseMessage(errMsg);
             return httpRes;
         }
         // 正常数据

@@ -16,8 +16,7 @@ public class HttpRes {
     private String textResponseBody;
     // 响应体-二进制
     private byte[] binaryResponseBody;
-    // 错误信息
-    private String textErrorResponseBody;
+
 
     public HttpRes() {
     }
@@ -38,7 +37,6 @@ public class HttpRes {
                 ", responseHeadMap=" + responseHeadMap +
                 ", textResponseBody='" + textResponseBody + '\'' +
                 ", binaryResponseBody=" + s +
-                ", textErrorResponseBody='" + textErrorResponseBody + '\'' +
                 '}';
     }
 }

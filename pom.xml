@@ -7,7 +7,7 @@
     <!--project meta info, required by sonatype-->
     <groupId>io.github.topicstudy</groupId>
     <artifactId>jhttp</artifactId>
-    <version>1.2.0</version>
+    <version>2.0.0</version>
     <name>io.github.topicstudy:jhttp</name>
     <packaging>jar</packaging>
     <description>send http request by java</description>
